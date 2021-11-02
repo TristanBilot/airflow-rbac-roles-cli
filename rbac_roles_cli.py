@@ -49,15 +49,18 @@ def create_rbac_role_with_permissions(
 
     airflow_url += "/api/v1/roles"
     response = requests.post(airflow_url, json=data, headers=headers)
-    response = response.json()
 
-    if response != {}:
-        if response['status'] == 403:
-            raise PermissionError(f"Error 403 returned, please check if your AirFlow account is Op/Admin or verify the dags exist. \n {response}")
-        else:
-            raise ConnectionError(f"An error occured during role creation: {response}")
-    else:
+    if response.status_code in [403, 200]:
+        response = response.json()
+
+    if response.status_code == 403:
+        raise PermissionError(f"Error 403 returned, please check if your AirFlow account is Op/Admin or verify the dags exist. \n {response}")
+    elif response.status_code == 401:
+        raise PermissionError(f"Error 401 returned, please check the access token if the page is protected by an authentication")
+    elif response.status_code == 200:
         print(f"Role `{new_role_name}` successfuly created.")
+    else:
+        raise ConnectionError(f"An error occured during role creation: {response}")
 
 def make_permissions(action, resources):
     permissions = []

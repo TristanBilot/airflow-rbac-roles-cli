@@ -7,7 +7,7 @@ That's why I created a script which given the **airflow url**, the **dag names**
 
 ## Usage
 ```shell
-python3 composer_rbac_roles.py -u airflow_url -r new_role_name -d dag1 dag2
+python3 rbac_roles_cli.py -u airflow_url -r new_role_name -d dag1 dag2
 ```
 Will create a role named `new_role_name` on the airflow project at the url `airflow_url` with enough permissions to only manage the dags `dag1` and `dag2`. 
 
@@ -17,5 +17,5 @@ Note that the permissions can be edited directly in the code and following the s
 GCP offers Cloud Composer: a Google-managed Airflow. The script also work with Composer, you only need to add an argument to the command: <a href="https://www.daimto.com/how-to-get-a-google-access-token-with-curl/"> the Google access-token</a>. This token is used in order to access the Composer page which is protected by a Google authentication page.
 
 ```shell
-python3 composer_rbac_roles.py -u airflow_url -r new_role_name -d dag1 dag2 -t access_token
+python3 rbac_roles_cli.py -u airflow_url -r new_role_name -d dag1 dag2 -t access_token
 ```

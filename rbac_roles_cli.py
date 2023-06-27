@@ -38,7 +38,7 @@ def create_rbac_role_with_permissions(
         read_permissions = make_permissions(read,[dag])
         edit_permissions = make_permissions(edit, [dag])
         delete_permissions = make_permissions(delete, [dag])
-    permissions += read_permissions + edit_permissions + delete_permissions
+        permissions += read_permissions + edit_permissions + delete_permissions
     
     data = {
         "actions": [
